@@ -7,7 +7,7 @@
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "postgres",
-            "database": "postgres",
+            "database": "spotify_db",
             "username": "postgres"
         }
     ]

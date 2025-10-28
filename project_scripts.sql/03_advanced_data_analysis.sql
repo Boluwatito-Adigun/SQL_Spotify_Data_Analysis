@@ -57,3 +57,27 @@ FROM
     temp_table_2
 ORDER BY
     energy_difference DESC
+
+
+-- Tracks where the energy-to-liveness ratio is greater than 1.2
+
+WITH temp_table_3 AS 
+(
+    SELECT
+        track,
+        energy / liveness AS energy_to_liveness_ratio
+    FROM
+        spotify
+)
+
+SELECT
+    track,
+    energy_to_liveness_ratio
+FROM
+    temp_table_3
+WHERE
+    energy_to_liveness_ratio > 1.2
+ORDER BY
+    energy_to_liveness_ratio DESC;
+
+

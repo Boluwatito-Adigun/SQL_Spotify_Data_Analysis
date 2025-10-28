@@ -1,9 +1,5 @@
 /*
 
-
-Write a query to find tracks where the liveness score is above the average.
-Use a WITH clause to calculate the difference between the highest and lowest energy values for tracks in each album.
-
 */
 
 
@@ -30,4 +26,34 @@ FROM temp_table_1
 WHERE
     rank <=3;
 
--- Write a query to find tracks where the liveness score is above the average.
+-- Tracks where the liveness score is above the average.
+
+SELECT
+    track,
+    liveness
+FROM
+    spotify
+WHERE
+    liveness > (SELECT AVG(liveness) FROM spotify)
+
+-- Calculate the difference between the highest and lowest energy values for tracks in each album.
+
+With temp_table_2 AS
+(
+    SELECT 
+        album,
+        MAX(energy) AS highest_energy,
+        MIN(energy) AS lowest_energy
+    FROM 
+        spotify
+    GROUP BY
+        album
+)
+
+SELECT 
+    album,
+    highest_energy - lowest_energy AS energy_difference
+FROM
+    temp_table_2
+ORDER BY
+    energy_difference DESC
